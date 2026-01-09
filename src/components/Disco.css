@@ -1,0 +1,145 @@
+.disco-item {
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.disco-item:hover {
+  border-color: #3498db;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.disco-expandido {
+  border-color: #3498db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.disco-resumen {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.disco-imagen {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #ecf0f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disco-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.disco-sin-imagen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f8c8d;
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+}
+
+.disco-info-basica {
+  flex: 1;
+  min-width: 0;
+}
+
+.disco-nombre {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.disco-grupo {
+  margin: 5px 0;
+  color: #34495e;
+  font-size: 16px;
+}
+
+.disco-genero {
+  margin: 5px 0;
+  color: #7f8c8d;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.boton-eliminar {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.boton-eliminar:hover {
+  background-color: #c0392b;
+}
+
+.boton-eliminar:active {
+  background-color: #a93226;
+}
+
+.disco-informacion-completa {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #ecf0f1;
+}
+
+.disco-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.disco-detalle p {
+  margin: 0;
+  color: #34495e;
+}
+
+.disco-detalle strong {
+  color: #2c3e50;
+}
+
+.prestado {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.disponible {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.disco-imagen-completa {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.disco-imagen-completa img {
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
