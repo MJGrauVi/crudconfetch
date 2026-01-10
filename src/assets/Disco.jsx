@@ -1,12 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Disco.css";
 
 const Disco = ({ disco }) => {
-  // Usar el atributo expandido del disco en lugar de estado local
-  const estaExpandido = disco.expandido || false;
+  const navigate = useNavigate();
   
+  const estaExpandido = disco.expandido || false;
   const caratula = disco.url_caratula || disco.caratula;
-  const nombreDisco = disco.nombreDisco || disco.nombre;
 
   return (
     <div
@@ -18,7 +18,7 @@ const Disco = ({ disco }) => {
         {/* Imagen de carátula */}
         <div className="disco-imagen">
           {caratula ? (
-            <img src={caratula} alt={nombreDisco} />
+            <img src={caratula} alt={disco.nombreDisco} />
           ) : (
             <div className="disco-sin-imagen">Sin imagen</div>
           )}
@@ -26,7 +26,7 @@ const Disco = ({ disco }) => {
 
         {/* Información básica */}
         <div className="disco-info-basica">
-          <h3 className="disco-nombre">{nombreDisco}</h3>
+          <h3 className="disco-nombre">{disco.nombreDisco}</h3>
           <p className="disco-grupo">{disco.grupo}</p>
           <p className="disco-genero">{disco.genero}</p>
           <p className="disco-estado">
@@ -38,7 +38,7 @@ const Disco = ({ disco }) => {
           </p>
         </div>
 
-        {/* Botones de acción - SIN onClick, solo atributos data-* */}
+        {/* Botones de acción */}
         <div className="disco-acciones">
           <button
             type="button"
@@ -79,7 +79,7 @@ const Disco = ({ disco }) => {
             </p>
             {caratula && (
               <div className="disco-imagen-completa">
-                <img src={caratula} alt={nombreDisco} />
+                <img src={caratula} alt={disco.nombreDisco} />
               </div>
             )}
           </div>

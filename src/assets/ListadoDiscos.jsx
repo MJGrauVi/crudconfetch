@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./ListadoDiscos.css";
-import Disco from "./Disco2.jsx";
-import MensajeTemporal from "./MensajeTemporal.jsx";
-import Cargando from "./Cargando.jsx";
-import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
+import Disco from "./Disco.jsx";
+import MensajeTemporal from "../components/MensajeTemporal.jsx";
+import Cargando from "../components/Cargando.jsx";
+import { ContextoDiscos } from "../context/ContextoDiscos.jsx";
 import { useNavigate } from "react-router-dom";
 
 const ListadoDiscos = () => {
@@ -21,9 +21,7 @@ const ListadoDiscos = () => {
       setDiscosFiltrados(
         discos.filter(
           (disco) =>
-            (disco.nombreDisco || disco.nombre)
-              ?.toLowerCase()
-              .includes(textoBusqueda) ||
+            disco.nombre?.toLowerCase().includes(textoBusqueda) ||
             disco.grupo?.toLowerCase().includes(textoBusqueda) ||
             disco.genero?.toLowerCase().includes(textoBusqueda)
         )
@@ -38,13 +36,8 @@ const ListadoDiscos = () => {
     try {
       const discoEliminado = discos.find((d) => d.id === idDisco);
       await borrarDisco(idDisco);
-      setMensajeEliminado(
-        `Disco "${
-          discoEliminado?.nombreDisco || discoEliminado?.nombre || ""
-        }" eliminado.`
-      );
+      setMensajeEliminado(`Disco "${discoEliminado?.nombre || ""}" eliminado.`);
     } catch (error) {
-      console.error("Error al eliminar disco:", error);
       setMensajeEliminado("Error al eliminar el disco.");
     }
   };
@@ -53,7 +46,7 @@ const ListadoDiscos = () => {
   const encontrarDiscoItem = (elemento) => {
     let actual = elemento;
     while (actual && actual !== document.body) {
-      if (actual.classList && actual.classList.contains("disco-item")) {
+      if (actual.classList && actual.classList.contains('disco-item')) {
         return actual;
       }
       actual = actual.parentElement;
@@ -65,7 +58,7 @@ const ListadoDiscos = () => {
   const estaEnDiscoAcciones = (elemento) => {
     let actual = elemento;
     while (actual && actual !== document.body) {
-      if (actual.classList && actual.classList.contains("disco-acciones")) {
+      if (actual.classList && actual.classList.contains('disco-acciones')) {
         return true;
       }
       actual = actual.parentElement;
@@ -73,7 +66,7 @@ const ListadoDiscos = () => {
     return false;
   };
 
-  /* Delegación de eventos completa - sin onClick en botones */
+  /* Delegación de eventos sin closest y sin stopPropagation */
   const manejarClickDelegado = (e) => {
     const elemento = e.target;
 
@@ -105,7 +98,7 @@ const ListadoDiscos = () => {
     }
 
     // Si es un botón, no hacer toggle
-    if (elemento.tagName === "BUTTON") {
+    if (elemento.tagName === 'BUTTON') {
       return;
     }
 
@@ -116,11 +109,7 @@ const ListadoDiscos = () => {
 
     // Buscar el disco-item padre navegando manualmente
     const discoItem = encontrarDiscoItem(elemento);
-    if (
-      discoItem &&
-      discoItem.dataset &&
-      discoItem.dataset.accion === "toggle"
-    ) {
+    if (discoItem && discoItem.dataset && discoItem.dataset.accion === "toggle") {
       const id = discoItem.dataset.id;
       if (id) {
         const index = discosFiltrados.findIndex((d) => d.id === id);
@@ -177,7 +166,6 @@ const ListadoDiscos = () => {
         </p>
       </div>
 
-      {/* Lista de discos con delegación completa */}
       <div className="lista-discos" onClick={manejarClickDelegado}>
         {discosFiltrados.map((disco) => (
           <Disco key={disco.id} disco={disco} />

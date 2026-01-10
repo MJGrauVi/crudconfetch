@@ -6,7 +6,7 @@ import Cargando from "./Cargando.jsx";
 import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
 import { useNavigate } from "react-router-dom";
 
-const ListadoDiscos = () => {
+const ListadoDiscos2 = () => {
   const { discos, cargando, borrarDisco } = useContext(ContextoDiscos);
   const navigate = useNavigate();
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
@@ -73,7 +73,7 @@ const ListadoDiscos = () => {
     return false;
   };
 
-  /* Delegación de eventos completa - sin onClick en botones */
+  /* Delegación de eventos sin closest y sin stopPropagation */
   const manejarClickDelegado = (e) => {
     const elemento = e.target;
 
@@ -88,7 +88,7 @@ const ListadoDiscos = () => {
       }
 
       if (accion === "editar" && id) {
-        navigate(`/discos/${id}/editar`);
+        // La navegación ya se maneja en el onClick del botón
         return;
       }
 
@@ -187,4 +187,4 @@ const ListadoDiscos = () => {
   );
 };
 
-export default ListadoDiscos;
+export default ListadoDiscos2;

@@ -1,10 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Disco.css";
 
-const Disco = ({ disco }) => {
+const Disco2 = ({ disco }) => {
+  const navigate = useNavigate();
+  
   // Usar el atributo expandido del disco en lugar de estado local
   const estaExpandido = disco.expandido || false;
   
+  // Función para navegar a editar (sin stopPropagation)
+  const manejarNavegacionEditar = (e) => {
+    e.preventDefault();
+    navigate(`/discos/${disco.id}/editar`);
+  };
+
   const caratula = disco.url_caratula || disco.caratula;
   const nombreDisco = disco.nombreDisco || disco.nombre;
 
@@ -38,13 +47,14 @@ const Disco = ({ disco }) => {
           </p>
         </div>
 
-        {/* Botones de acción - SIN onClick, solo atributos data-* */}
+        {/* Botones de acción */}
         <div className="disco-acciones">
           <button
             type="button"
             className="boton-editar"
             data-accion="editar"
             data-id={disco.id}
+            onClick={manejarNavegacionEditar}
           >
             Editar
           </button>
@@ -89,4 +99,4 @@ const Disco = ({ disco }) => {
   );
 };
 
-export default Disco;
+export default Disco2;

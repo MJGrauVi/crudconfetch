@@ -1,32 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Disco.css";
 
-const Disco = ({ disco }) => {
-  // Usar el atributo expandido del disco en lugar de estado local
-  const estaExpandido = disco.expandido || false;
-  
+const Disco1 = (props) => {
+  const { disco } = props;
+  const navigate = useNavigate();
+  const [mostrarCompleto, setMostrarCompleto] = useState(false);
+
+  const alternarInformacion = () => {
+    setMostrarCompleto(!mostrarCompleto);
+  };
+
+  const manejarEliminar = (evento) => {
+    evento.stopPropagation();
+    evento.preventDefault();
+    if (props.onEliminar) {
+      props.onEliminar(disco.id);
+    }
+  };
+
+  const manejarEditar = (evento) => {
+    evento.stopPropagation();
+    evento.preventDefault();
+    navigate(`/discos/${disco.id}/editar`);
+  };
+
   const caratula = disco.url_caratula || disco.caratula;
-  const nombreDisco = disco.nombreDisco || disco.nombre;
 
   return (
     <div
-      className={`disco-item ${estaExpandido ? "disco-expandido" : ""}`}
-      data-accion="toggle"
-      data-id={disco.id}
+      className={`disco-item ${mostrarCompleto ? "disco-expandido" : ""}`}
+      onClick={alternarInformacion}
     >
       <div className="disco-resumen">
-        {/* Imagen de carátula */}
         <div className="disco-imagen">
           {caratula ? (
-            <img src={caratula} alt={nombreDisco} />
+            <img src={caratula} alt={disco.nombreDisco} />
           ) : (
             <div className="disco-sin-imagen">Sin imagen</div>
           )}
         </div>
 
-        {/* Información básica */}
         <div className="disco-info-basica">
-          <h3 className="disco-nombre">{nombreDisco}</h3>
+          <h3 className="disco-nombre">{disco.nombreDisco}</h3>
           <p className="disco-grupo">{disco.grupo}</p>
           <p className="disco-genero">{disco.genero}</p>
           <p className="disco-estado">
@@ -38,11 +54,11 @@ const Disco = ({ disco }) => {
           </p>
         </div>
 
-        {/* Botones de acción - SIN onClick, solo atributos data-* */}
         <div className="disco-acciones">
           <button
             type="button"
             className="boton-editar"
+            onClick={manejarEditar}
             data-accion="editar"
             data-id={disco.id}
           >
@@ -51,6 +67,7 @@ const Disco = ({ disco }) => {
           <button
             type="button"
             className="boton-eliminar"
+            onClick={manejarEliminar}
             data-accion="eliminar"
             data-id={disco.id}
           >
@@ -59,8 +76,7 @@ const Disco = ({ disco }) => {
         </div>
       </div>
 
-      {/* Información completa */}
-      {estaExpandido && (
+      {mostrarCompleto && (
         <div className="disco-informacion-completa">
           <div className="disco-detalle">
             <p>
@@ -79,7 +95,7 @@ const Disco = ({ disco }) => {
             </p>
             {caratula && (
               <div className="disco-imagen-completa">
-                <img src={caratula} alt={nombreDisco} />
+                <img src={caratula} alt={disco.nombre} />
               </div>
             )}
           </div>
@@ -89,4 +105,4 @@ const Disco = ({ disco }) => {
   );
 };
 
-export default Disco;
+export default Disco1;

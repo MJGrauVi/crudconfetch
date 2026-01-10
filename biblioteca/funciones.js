@@ -23,7 +23,7 @@ const traerDatosConPromiseAll = async (urls = []) => {
     );
 };
 
- const validarFormulario = ({ nombreDisco, tipoGrupo, grupo, genero, lanzamiento, localizacion }) => {
+ const validarDiscoCompleto = ({ nombreDisco, url_caratula, tipoGrupo, grupo, genero, lanzamiento, localizacion }) => {
     let errores = [];
     const regExp = /^[A-Za-z\s]{4,}$/;
     const localizaRegExp = /^ES-\d{3}[A-Z]{2}$/;
@@ -32,11 +32,14 @@ const traerDatosConPromiseAll = async (urls = []) => {
     if (!nombreDisco || !regExp.test(nombreDisco)) {
         errores.push("El nombre es obligatorio y debe tener al menos 4 caracteres.");
     }
+     if (url_caratula) {
+        errores.push("El género es obligatorio.");
+    }
     if (!tipoGrupo || tipoGrupo.length < 4) {
         errores.push("El tipo de Grupo es obligatorio y debe tener al menos 4 caracteres.");
     }
     if (!grupo || grupo.length < 4) {
-        errores.push("El nombre del Grupo o solista es obligatorio y debe tener al menos 4 caracteres.");
+        errores.push("El nombre del grupo o solista es obligatorio y debe tener al menos 4 caracteres.");
     }
     if (!genero) {
         errores.push("El género es obligatorio.");
@@ -112,4 +115,4 @@ const pintarDetalle = async (seccion, juego) => {
 };
 
 
-export { traerDatos, validarFormulario, mostrarDatos, mostrarMensaje, filtrarPorGenero, pintarDetalle};
+export { traerDatos, validarDiscoCompleto, mostrarDatos, mostrarMensaje, filtrarPorGenero, pintarDetalle};
