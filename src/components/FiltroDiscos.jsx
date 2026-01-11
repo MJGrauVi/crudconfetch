@@ -1,21 +1,19 @@
-const FiltroDiscos = ({ valor, onChange, onClear }) => {
-  return (
-    <div className="controles-filtrado">
+const FiltroDisco = ({ textoFiltro, setTextoFiltro }) => (
+  <div className="controles-filtrado">
+    <div className="campo-filtro">
+      <label htmlFor="filtro-texto">Filtrar discos:</label>
       <input
         type="text"
-        value={valor}
-        onChange={e => onChange(e.target.value)}
-        placeholder="Buscar por nombre, grupo o género"
+        id="filtro-texto"
+        value={textoFiltro}
+        onChange={(e) => setTextoFiltro(e.target.value)}
+        placeholder="Buscar por nombre, grupo o género..."
       />
-
-      <button
-        onClick={onClear}
-        disabled={!valor.trim()}
-      >
-        Limpiar
-      </button>
     </div>
-  );
-}
-export default FiltroDiscos;
+    <button type="button" onClick={() => setTextoFiltro("")} disabled={!textoFiltro}>
+      Limpiar
+    </button>
+  </div>
+);
 
+export default FiltroDisco;

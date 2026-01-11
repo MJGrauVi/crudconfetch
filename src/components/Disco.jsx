@@ -1,20 +1,21 @@
-import { useState } from "react";
-import DiscoDetalle from "./DiscoDetalle";
-import DiscoAcciones from "./DiscoAcciones";
+import React from "react";
+import DiscoDetalle from "./DiscoDetalle.jsx";
+import DiscoAcciones from "./DiscoAcciones.jsx";
 
-export default function Disco({ disco, onBorrado }) {
-  const [expandido, setExpandido] = useState(false);
-
+const Disco = ({ disco, expandido, onToggle, onBorrar }) => {
   return (
-    <div
-      className="disco-item"
-      onClick={() => setExpandido(!expandido)}
-    >
-      <h3>{disco.nombreDisco}</h3>
-
-      {expandido && <DiscoDetalle disco={disco} />}
-
-      <DiscoAcciones disco={disco} onBorrado={onBorrado} />
+    <div className="disco-item" onClick={onToggle}>
+      {disco.url_caratula ? (
+        <img src={disco.url_caratula} alt={disco.nombreDisco} />
+      ) : null}
+      <div className="disco-info">
+        <h3>{disco.nombreDisco}</h3>
+        <p>{disco.grupo} - {disco.genero}</p>
+        {expandido && <DiscoDetalle disco={disco} />}
+      </div>
+      <DiscoAcciones disco={disco} onBorrar={onBorrar} />
     </div>
   );
-}
+};
+
+export default Disco;

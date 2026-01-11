@@ -43,6 +43,18 @@
         "http://localhost:3000/canciones/G11d9f8c",
         "http://localhost:3000/canciones/H11d9f8c"
       ]
+    },
+    {
+      "id": "dc1d5398-6888-4b80-a469-9542bf3a4b99",
+      "nombreDisco": "Palabra de Mujer",
+      "url_caratula": "",
+      "tipoGrupo": "Solista",
+      "grupo": "MonicaNaranjo",
+      "genero": "Pop",
+      "lanzamiento": "2000",
+      "localizacion": "ES-111AA",
+      "prestado": false,
+      "listado_canciones": []
     }
   ]
 }

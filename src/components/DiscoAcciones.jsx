@@ -1,28 +1,19 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { ContextoDiscos } from "../context/ProveedorDiscos";
 
-export default function DiscoAcciones({ disco, onBorrado }) {
-  const { borrarDisco } = useContext(ContextoDiscos);
+const DiscoAcciones = ({ disco, onBorrar }) => {
   const navigate = useNavigate();
 
-  const eliminar = async () => {
-    await borrarDisco(disco.id);
-    onBorrado(`Disco "${disco.nombreDisco}" eliminado`);
-  };
-
   return (
-    <div
-      className="disco-acciones"
-      onClick={e => e.stopPropagation()}
-    >
-      <button onClick={() => navigate(`/discos/${disco.id}/editar`)}>
+    <div className="disco-acciones">
+      <button onClick={e => { e.stopPropagation(); navigate(`/discos/${disco.id}/editar`); }}>
         Editar
       </button>
-
-      <button onClick={eliminar}>
-        Eliminar
+      <button onClick={e => { e.stopPropagation(); onBorrar(); }}>
+        Borrar
       </button>
     </div>
   );
-}
+};
+
+export default DiscoAcciones;

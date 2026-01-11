@@ -1,24 +1,59 @@
-import { useContext, useMemo, useState } from "react";
-import { ContextoDiscos } from "../context/ProveedorDiscos";
-import Disco from "./Disco";
-import Cargando from "./Cargando";
-import MensajeTemporal from "./MensajeTemporal";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import "./ListadoDiscos.css";
+import Disco from "./Disco.jsx";
+import MensajeTemporal from "./MensajeTemporal.jsx";
+import Cargando from "./Cargando.jsx";
+import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
 
-const ListadoDiscos = () =>{
-  const { discos, cargando } = useContext(ContextoDiscos);
-  const [filtro, setFiltro] = useState("");
-  const [mensaje, setMensaje] = useState("");
+const ListadoDiscos = () => {
+  const { discos, cargando, borrarDisco } = useContext(ContextoDiscos);
+  const [discosFiltrados, setDiscosFiltrados] = useState([]);
+  const [textoFiltro, setTextoFiltro] = useState("");
+  const [mensajeEliminado, setMensajeEliminado] = useState("");
 
-  const discosFiltrados = useMemo(() => {
-    const texto = filtro.toLowerCase().trim();
-    if (!texto) return discos;
+  // Filtrado de discos
+  useEffect(() => {
+    if (!textoFiltro.trim()) {
+      setDiscosFiltrados(discos);
+    } else {
+      const texto = textoFiltro.toLowerCase().trim();
+      setDiscosFiltrados(
+        discos.filter(
+          d =>
+            d.nombreDisco?.toLowerCase().includes(texto) ||
+            d.grupo?.toLowerCase().includes(texto) ||
+            d.genero?.toLowerCase().includes(texto)
+        )
+      );
+    }
+  }, [textoFiltro, discos]);
 
-    return discos.filter(d =>
-      d.nombreDisco.toLowerCase().includes(texto) ||
-      d.grupo.toLowerCase().includes(texto) ||
-      d.genero.toLowerCase().includes(texto)
+  const manejarCambioFiltro = useCallback(e => setTextoFiltro(e.target.value), []);
+  const limpiarFiltro = useCallback(() => setTextoFiltro(""), []);
+
+  const toggleDisco = useCallback(id => {
+    setDiscosFiltrados(prev =>
+      prev.map(d => (d.id === id ? { ...d, expandido: !d.expandido } : d))
     );
-  }, [filtro, discos]);
+  }, []);
+
+  const handleBorrarDisco = useCallback(async id => {
+    try {
+      const discoEliminado = discos.find(d => d.id === id);
+      await borrarDisco(id);
+      setMensajeEliminado(`Disco "${discoEliminado?.nombreDisco}" eliminado.`);
+    } catch (error) {
+      console.error(error);
+      setMensajeEliminado("Error al eliminar el disco.");
+    }
+  }, [discos, borrarDisco]);
+
+  useEffect(() => {
+    if (mensajeEliminado) {
+      const timer = setTimeout(() => setMensajeEliminado(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [mensajeEliminado]);
 
   if (cargando) return <Cargando />;
 
@@ -26,16 +61,23 @@ const ListadoDiscos = () =>{
     <div className="contenedor-listado-discos">
       <h2>Listado de Discos</h2>
 
-      <MensajeTemporal texto={mensaje} />
+      <MensajeTemporal texto={mensajeEliminado} />
 
-      <input
-        value={filtro}
-        onChange={e => setFiltro(e.target.value)}
-        placeholder="Buscar por nombre, grupo o género"
-      />
+      <div className="controles-filtrado">
+        <input
+          type="text"
+          value={textoFiltro}
+          onChange={manejarCambioFiltro}
+          placeholder="Buscar por nombre, grupo o género..."
+        />
+        <button type="button" onClick={limpiarFiltro} disabled={!textoFiltro.trim()}>
+          Limpiar
+        </button>
+      </div>
 
       <p>
-        Mostrando {discosFiltrados.length} de {discos.length}
+        Mostrando {discosFiltrados.length} de {discos.length} discos
+        {textoFiltro.trim() && ` (filtrados por "${textoFiltro}")`}
       </p>
 
       <div className="lista-discos">
@@ -43,11 +85,14 @@ const ListadoDiscos = () =>{
           <Disco
             key={disco.id}
             disco={disco}
-            onBorrado={setMensaje}
+            expandido={disco.expandido || false}
+            onToggle={() => toggleDisco(disco.id)}
+            onBorrar={() => handleBorrarDisco(disco.id)}
           />
         ))}
       </div>
     </div>
   );
-}
+};
+
 export default ListadoDiscos;

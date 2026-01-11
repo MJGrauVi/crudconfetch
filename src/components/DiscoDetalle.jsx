@@ -1,11 +1,14 @@
-const DiscoDetalle =({ disco }) => {
+import React from "react";
+
+const DiscoDetalle = ({ disco }) => {
   return (
     <div className="disco-detalle">
-      <p><strong>Grupo:</strong> {disco.grupo}</p>
-      <p><strong>Género:</strong> {disco.genero}</p>
-      <p><strong>Año:</strong> {disco.lanzamiento}</p>
-      <p><strong>Ubicación:</strong> {disco.localizacion}</p>
+      <p>Año: {disco.lanzamiento}</p>
+      <p>Localización: {disco.localizacion}</p>
+      <p>Prestado: {disco.prestado ? "Sí" : "No"}</p>
+      {/* Aquí puedes añadir más detalles si los hubiera */}
     </div>
   );
-}
+};
+
 export default DiscoDetalle;

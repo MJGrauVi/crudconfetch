@@ -39,8 +39,8 @@ const Inicio = () => {
             </li>
             <li>
               <strong>Persistencia:</strong> Todos tus datos se guardan
-              automáticamente en servidor, por lo que no perderás tu
-              colección al cerrar la aplicación.
+              automáticamente al realizar cualquier modificación y se mantienen
+              contiuamente actualizados.
             </li>
           </ul>
         </div>
