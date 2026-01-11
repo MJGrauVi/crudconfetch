@@ -43,30 +43,6 @@
         "http://localhost:3000/canciones/G11d9f8c",
         "http://localhost:3000/canciones/H11d9f8c"
       ]
-    },
-    {
-      "id": "a7b5687b-5113-4f34-94ac-864c92085dd3",
-      "nombreDisco": "Mar y montes",
-      "url_caratula": "",
-      "tipoGrupo": "Grupo musical",
-      "grupo": "Maria del Montes",
-      "genero": "Rock",
-      "lanzamiento": "2000",
-      "localizacion": "ES-100AA",
-      "prestado": false,
-      "listado_canciones": []
-    },
-    {
-      "id": "884e65a7-4b4e-4901-b49a-7c55a121b57e",
-      "nombreDisco": "Palabra de Mujer",
-      "url_caratula": "",
-      "tipoGrupo": "Solista",
-      "grupo": "Mónica Naranjo",
-      "genero": "Rock",
-      "lanzamiento": "2010",
-      "localizacion": "ES-001AB",
-      "prestado": true,
-      "listado_canciones": []
     }
   ]
 }
