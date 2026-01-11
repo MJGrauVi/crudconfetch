@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./FormularioDisco.css";
 import Errores from "./Errores.jsx";
-import {validarDiscoCompleto} from "../../biblioteca/funciones.js";
+import { validarDiscoCompleto } from "../../biblioteca/funciones.js";
 import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
 
 const FormularioDisco = () => {
-  const { discos, guardarDisco, editarDiscoCompleto } = useContext(ContextoDiscos);
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { discos, guardarDisco, editarDiscoCompleto } =
+    useContext(ContextoDiscos); //Para consumir los datos del contexto.
+  const { id } = useParams(); //Obtenemos el id del elemento que queremos editar.
+  const navigate = useNavigate(); //Para redirigir despues de actualizar un disco.
   const esEdicion = !!id;
 
   // Valores iniciales del formulario
@@ -39,8 +40,8 @@ const FormularioDisco = () => {
           url_caratula: discoEncontrado.url_caratula || "",
           tipoGrupo: discoEncontrado.tipoGrupo || "",
           grupo: discoEncontrado.grupo || "",
-          lanzamiento: discoEncontrado.lanzamiento || "",
           genero: discoEncontrado.genero || "",
+          lanzamiento: discoEncontrado.lanzamiento || "",
           localizacion: discoEncontrado.localizacion || "",
           prestado: discoEncontrado.prestado || false,
         });
@@ -49,14 +50,27 @@ const FormularioDisco = () => {
   }, [id, discos, esEdicion]);
 
   /* Actualiza el estado del formulario cuando cambia un campo */
-  const actualizarDato = (evento) => {
+/*   const actualizarDato = (e) => {
+    const { name, value, type, checked } = e.target;
+    const nuevoValor = type === "checkbox" ? checked : value;
+
+    const discoActualizado = {
+      ...disco,
+      [name]: nuevoValor,
+    };
+
+    setDisco(discoActualizado);
+    setMensaje({ tipo: "", texto: "" });
+
+    validarCampo(discoActualizado, name);
+  }; */
+    const actualizarDato = (evento) => {
     const { name, value, type, checked } = evento.target;
     const nuevoValor = type === "checkbox" ? checked : value;
 
     // Usar función de actualización para asegurar que se actualiza correctamente
     setDisco((prevDisco) => ({
-      ...prevDisco,
-      [name]: nuevoValor,
+      ...prevDisco, [name]: nuevoValor,
     }));
     
     setMensaje({ tipo: "", texto: "" });
@@ -85,7 +99,14 @@ const FormularioDisco = () => {
       return discoTemporal;
     });
   };
+/*   const validarCampo = (discoActualizado, campo) => {
+    const erroresCompletos = validarDiscoCompleto(discoActualizado);
 
+    setErrores((prev) => ({
+      ...prev,
+      [campo]: erroresCompletos[campo] || [],
+    }));
+  }; */
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
 
@@ -148,7 +169,9 @@ const FormularioDisco = () => {
   };
 
   const obtenerClaseError = (nombreCampo) => {
-    return errores[nombreCampo] && errores[nombreCampo].length > 0 ? "campo-error" : "";
+    return errores[nombreCampo] && errores[nombreCampo].length > 0
+      ? "campo-error"
+      : "";
   };
 
   const todosLosErrores = Object.values(errores).flat();
@@ -168,7 +191,7 @@ const FormularioDisco = () => {
             name="nombreDisco"
             value={disco.nombreDisco}
             onChange={actualizarDato}
-            className={`input-formulario ${obtenerClaseError("nombre")}`}
+            className={`input-formulario ${obtenerClaseError("nombreDisco")}`}
             placeholder="Título del disco"
           />
         </div>
@@ -232,23 +255,6 @@ const FormularioDisco = () => {
           />
         </div>
 
-        {/* Año de publicación */}
-        <div className="campo-formulario">
-          <label htmlFor="lanzamiento">
-            Año de publicación <span className="obligatorio">*</span>
-          </label>
-          <input
-            type="text"
-            id="lanzamiento"
-            name="lanzamiento"
-            value={disco.lanzamiento}
-            onChange={actualizarDato}
-            className={`input-formulario ${obtenerClaseError("anio")}`}
-            placeholder="YYYY"
-            maxLength="4"
-          />
-        </div>
-
         {/* Género musical */}
         <div className="campo-formulario">
           <label htmlFor="genero">
@@ -268,6 +274,23 @@ const FormularioDisco = () => {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Año de publicación */}
+        <div className="campo-formulario">
+          <label htmlFor="lanzamiento">
+            Año de publicación <span className="obligatorio">*</span>
+          </label>
+          <input
+            type="text"
+            id="lanzamiento"
+            name="lanzamiento"
+            value={disco.lanzamiento}
+            onChange={actualizarDato}
+            className={`input-formulario ${obtenerClaseError("anio")}`}
+            placeholder="YYYY"
+            maxLength="4"
+          />
         </div>
 
         {/* Localización */}
@@ -308,9 +331,8 @@ const FormularioDisco = () => {
 
       {mensaje.texto && (
         <div
-          className={`mensaje-formulario ${
-            mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"
-          }`}
+          className={`mensaje-formulario ${mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"
+            }`}
         >
           {mensaje.texto}
         </div>

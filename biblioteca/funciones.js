@@ -42,7 +42,7 @@ const traerDatosConPromiseAll = async (urls = []) => {
         errores.push("El nombre del grupo o solista es obligatorio y debe tener al menos 4 caracteres.");
     }
     if (!genero) {
-        errores.push("El género es obligatorio.");
+        errores.push("El género es obligatoriooooooo.");
     }
     if (!lanzamiento || !anioRegExp.test(lanzamiento)) {
         errores.push("El año de lanzamiento es obligatorio.");

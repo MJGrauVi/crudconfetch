@@ -1,92 +1,20 @@
-import React from "react";
-import "./Disco.css";
+import { useState } from "react";
+import DiscoDetalle from "./DiscoDetalle";
+import DiscoAcciones from "./DiscoAcciones";
 
-const Disco = ({ disco }) => {
-  // Usar el atributo expandido del disco en lugar de estado local
-  const estaExpandido = disco.expandido || false;
-  
-  const caratula = disco.url_caratula || disco.caratula;
-  const nombreDisco = disco.nombreDisco || disco.nombre;
+export default function Disco({ disco, onBorrado }) {
+  const [expandido, setExpandido] = useState(false);
 
   return (
     <div
-      className={`disco-item ${estaExpandido ? "disco-expandido" : ""}`}
-      data-accion="toggle"
-      data-id={disco.id}
+      className="disco-item"
+      onClick={() => setExpandido(!expandido)}
     >
-      <div className="disco-resumen">
-        {/* Imagen de carátula */}
-        <div className="disco-imagen">
-          {caratula ? (
-            <img src={caratula} alt={nombreDisco} />
-          ) : (
-            <div className="disco-sin-imagen">Sin imagen</div>
-          )}
-        </div>
+      <h3>{disco.nombreDisco}</h3>
 
-        {/* Información básica */}
-        <div className="disco-info-basica">
-          <h3 className="disco-nombre">{nombreDisco}</h3>
-          <p className="disco-grupo">{disco.grupo}</p>
-          <p className="disco-genero">{disco.genero}</p>
-          <p className="disco-estado">
-            {disco.prestado ? (
-              <span className="prestado">Prestado</span>
-            ) : (
-              <span className="disponible">Disponible</span>
-            )}
-          </p>
-        </div>
+      {expandido && <DiscoDetalle disco={disco} />}
 
-        {/* Botones de acción - SIN onClick, solo atributos data-* */}
-        <div className="disco-acciones">
-          <button
-            type="button"
-            className="boton-editar"
-            data-accion="editar"
-            data-id={disco.id}
-          >
-            Editar
-          </button>
-          <button
-            type="button"
-            className="boton-eliminar"
-            data-accion="eliminar"
-            data-id={disco.id}
-          >
-            Eliminar
-          </button>
-        </div>
-      </div>
-
-      {/* Información completa */}
-      {estaExpandido && (
-        <div className="disco-informacion-completa">
-          <div className="disco-detalle">
-            <p>
-              <strong>Año de publicación:</strong> {disco.lanzamiento || disco.anio}
-            </p>
-            <p>
-              <strong>Localización:</strong> {disco.localizacion}
-            </p>
-            <p>
-              <strong>Estado:</strong>{" "}
-              {disco.prestado ? (
-                <span className="prestado">Prestado</span>
-              ) : (
-                <span className="disponible">Disponible</span>
-              )}
-            </p>
-            {caratula && (
-              <div className="disco-imagen-completa">
-                <img src={caratula} alt={nombreDisco} />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <DiscoAcciones disco={disco} onBorrado={onBorrado} />
     </div>
   );
-};
-
-export default Disco;
+}

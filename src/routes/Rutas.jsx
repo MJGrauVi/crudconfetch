@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Inicio from "../pages/Inicio";
 import Contenedor from "../pages/Contenedor.jsx";
-import ListadoDiscos from "../pages/ListadoDiscos.jsx";
+import ListadoDiscos from "../pages/ListadoDiscosPages.jsx";
 import Error from "../pages/Error";
 
 const Rutas = () => {

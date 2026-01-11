@@ -1,4 +1,4 @@
-import ListadoDiscos from "../components/ListadoDiscos1";
+import ListadoDiscos from "../components/ListadoDiscos";
 
 /**
  * Componente ListadoDiscos (Página)
