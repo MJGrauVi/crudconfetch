@@ -5,6 +5,7 @@ import Errores from "./Errores.jsx";
 import { validarDiscoCompleto } from "../../biblioteca/funciones.js";
 import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
 
+//Formulario para insertar o editar disco.
 const FormularioDisco = () => {
   const { discos, guardarDisco, editarDiscoCompleto } =
     useContext(ContextoDiscos); //Para consumir los datos del contexto.
@@ -25,7 +26,7 @@ const FormularioDisco = () => {
   };
 
   const [disco, setDisco] = useState(valoresIniciales);
-  const [errores, setErrores] = useState({});
+  const [errores, setErrores] = useState({}); 
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
   const generosMusicales = ["Rock", "Pop", "Jazz", "Clásica"];
@@ -66,7 +67,7 @@ const FormularioDisco = () => {
   }; */
     const actualizarDato = (evento) => {
     const { name, value, type, checked } = evento.target;
-    const nuevoValor = type === "checkbox" ? checked : value;
+    const nuevoValor = type === "checkbox" ? checked : value;//ternaria para tomar el valor sobre el tipo de dato correcto.
 
     // Usar función de actualización para asegurar que se actualiza correctamente
     setDisco((prevDisco) => ({
