@@ -17,6 +17,21 @@ const traerDatos = async (url) => {
     }
 }
 
+/* async function cargarImagen() { 
+    let miImagen;
+    try { 
+        const response = await fetch("flores.jpg"); 
+        if (!response.ok) { 
+            console.log("Respuesta de red OK pero respuesta HTTP no OK"); 
+            return; 
+        } const miBlob = await response.blob(); 
+        const objectURL = URL.createObjectURL(miBlob); 
+        miImagen.src = objectURL; } catch (error) { 
+            console.log("Hubo un problema con la petición Fetch: " + error.message); 
+        } 
+    } 
+    cargarImagen();
+  */   
 const traerDatosConPromiseAll = async (urls = []) => {
     return await Promise.all(
         urls.map(url => fetch(url).then(res => res.json()))

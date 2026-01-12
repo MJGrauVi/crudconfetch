@@ -1,4 +1,5 @@
 const FiltroDisco = ({ textoFiltro, setTextoFiltro }) => (
+  //Componente de presentación
   <div className="controles-filtrado">
     <div className="campo-filtro">
       <label htmlFor="filtro-texto">Filtrar discos:</label>

@@ -6,7 +6,7 @@ import Cargando from "./Cargando.jsx";
 import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
 
 const ListadoDiscos = () => {
-  const { discos, cargando, borrarDisco } = useContext(ContextoDiscos);
+  const {discos, cargando, borrarDisco } = useContext(ContextoDiscos);
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
   const [textoFiltro, setTextoFiltro] = useState("");
   const [mensajeEliminado, setMensajeEliminado] = useState("");
@@ -27,6 +27,7 @@ const ListadoDiscos = () => {
       );
     }
   }, [textoFiltro, discos]);
+  
 
   const manejarCambioFiltro = useCallback(e => setTextoFiltro(e.target.value), []);
   const limpiarFiltro = useCallback(() => setTextoFiltro(""), []);
@@ -63,6 +64,7 @@ const ListadoDiscos = () => {
 
       <MensajeTemporal texto={mensajeEliminado} />
 
+{/* Sección de filtrado. */}
       <div className="controles-filtrado">
         <input
           type="text"
@@ -74,7 +76,7 @@ const ListadoDiscos = () => {
           Limpiar
         </button>
       </div>
-
+{/* Mensaje del filtrado */}
       <p>
         Mostrando {discosFiltrados.length} de {discos.length} discos
         {textoFiltro.trim() && ` (filtrados por "${textoFiltro}")`}

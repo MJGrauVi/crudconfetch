@@ -9,11 +9,11 @@ const Menu = () => {
         <Link className="menu-elemento" to="/">
           Inicio
         </Link>
-        <Link className="menu-elemento" to="/contenedor">
+        <Link className="menu-elemento" to="/insertar">
           Insertar disco
         </Link>
         <Link className="menu-elemento" to="/listadoDiscos">
-          Listar disco
+          Listado discos
         </Link>
       </nav>
     </>
