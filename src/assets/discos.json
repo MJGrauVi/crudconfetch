@@ -6,14 +6,11 @@
       "url_caratula": "",
       "tipoGrupo": "Solista",
       "grupo": "Mónica Naranjo",
-      "genero": "Pop",
-      "lanzamiento": 2020,
+      "genero": "Rock",
+      "lanzamiento": "2025",
       "localizacion": "ES-100AA",
-      "listado_canciones": [
-        "http://localhost:3000/cancioness/A11d9f8c",
-        "http://localhost:3000/canciones/B11d9f8c",
-        "http://localhost:3000/canciones/C11d9f8c"
-      ]
+      "prestado": false,
+      "listado_canciones": []
     },
     {
       "id": "896a34d2",

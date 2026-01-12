@@ -12,7 +12,7 @@ const ListadoDiscos = () => {
   const [mensajeEliminado, setMensajeEliminado] = useState("");
 
   // Filtrado de discos
-  useEffect(() => {
+   useEffect(() => {
     if (!textoFiltro.trim()) {
       setDiscosFiltrados(discos);
     } else {
@@ -26,8 +26,7 @@ const ListadoDiscos = () => {
         )
       );
     }
-  }, [textoFiltro, discos]);
-  
+  }, [textoFiltro, discos]); 
 
   const manejarCambioFiltro = useCallback(e => setTextoFiltro(e.target.value), []);
   const limpiarFiltro = useCallback(() => setTextoFiltro(""), []);
