@@ -1,18 +1,28 @@
 import { createContext, useEffect, useState } from "react";
 import { useAPI } from "../hooks/useAPI.js";
 
+//Creo el contexto
 const ContextoDiscos = createContext();
 
 const URL_API = "http://localhost:3001/discos";
 
 const ProveedorDiscos = ({ children }) => {
-  const { cargando, error, solicitud } = useAPI();
+ // const { cargando, error, solicitud } = useAPI();
   const [discos, setDiscos] = useState([]);
 
+  //
+const {cargarndo, error}= useAPI();
+
   const cargarDiscos = async () => {
+    try{
     const datos = await solicitud(URL_API);
     setDiscos(datos);
+    }catch(error){
+      throw error;
+    }
   };
+
+
 
   const guardarDisco = async (disco) => {
     await solicitud(URL_API, {

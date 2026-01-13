@@ -26,6 +26,16 @@ export const useAPI = () => {
       setCargando(false);
     }
   };
+  
+/******************************************************************************** */
+  //Incluir el ID  del disco un la url para eliminarlo. Ver forma de parametrizar.
+  /******************************************************************************* */
 
-  return { cargando, error, solicitud };
+  const borrarDisco = (url)=>{
+    solicitud(url, {
+      method: "DELETE",
+    })
+  }
+
+  return { cargando, error};
 };
