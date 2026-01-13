@@ -62,7 +62,7 @@ const ListadoDiscos = () => {
     <div className="contenedor-listado-discos">
       <h2>Listado de Discos</h2>
 
-      <MensajeTemporal texto={mensajeEliminado} />
+     {/*  <MensajeTemporal texto={mensajeEliminado} /> */}
 
 {/* Sección de filtrado. */}
       <div className="controles-filtrado">

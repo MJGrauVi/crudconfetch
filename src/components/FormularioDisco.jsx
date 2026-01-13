@@ -79,13 +79,13 @@ const FormularioDisco = () => {
   };
 
   /* Valida un campo específico del formulario */
-  const validarCampo = (nombreCampo, valor) => {
+  /* const validarCampo = (nombreCampo, valor) => {
     setDisco((prevDisco) => {
       const discoTemporal = { ...prevDisco, [nombreCampo]: valor };
       const erroresCompletos = validarDiscoCompleto(discoTemporal);
 
-      // Si se modifica tipoGrupo o nombreGrupo, validar ambos campos
-      if (nombreCampo === "tipoGrupo" || nombreCampo === "nombreGrupo") {
+      // Si se modifica tipoGrupo o grupo, validar ambos campos
+       if (nombreCampo === "tipoGrupo" || nombreCampo === "grupo") {
         setErrores((erroresPrevios) => ({
           ...erroresPrevios,
           grupo: erroresCompletos.grupo || [],
@@ -95,11 +95,12 @@ const FormularioDisco = () => {
           ...erroresPrevios,
           [nombreCampo]: erroresCompletos[nombreCampo] || [],
         }));
-      }
+      } 
 
       return discoTemporal;
     });
-  };
+  }; */
+  const validarCampo = (nombreCampo, valor) => { const discoTemporal = { ...disco, [nombreCampo]: valor }; const erroresCompletos = validarDiscoCompleto(discoTemporal); setDisco(discoTemporal); setErrores((erroresPrevios) => { const nuevosErrores = { ...erroresPrevios, [nombreCampo]: erroresCompletos[nombreCampo] || [] }; if (nombreCampo === "tipoGrupo" || nombreCampo === "grupo") { nuevosErrores.grupo = erroresCompletos.grupo || []; } return nuevosErrores; }); };
 /*   const validarCampo = (discoActualizado, campo) => {
     const erroresCompletos = validarDiscoCompleto(discoActualizado);
 
@@ -288,7 +289,7 @@ const FormularioDisco = () => {
             name="lanzamiento"
             value={disco.lanzamiento}
             onChange={actualizarDato}
-            className={`input-formulario ${obtenerClaseError("anio")}`}
+            className={`input-formulario ${obtenerClaseError("")}`}
             placeholder="YYYY"
             maxLength="4"
           />
