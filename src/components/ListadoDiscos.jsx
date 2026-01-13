@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./ListadoDiscos.css";
 import Disco from "./Disco.jsx";
 import MensajeTemporal from "./MensajeTemporal.jsx";
 import Cargando from "./Cargando.jsx";
-import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
+import {useDiscos} from "../hooks/useDiscos.js";
+
 
 const ListadoDiscos = () => {
-  const {discos, cargando, borrarDisco } = useContext(ContextoDiscos);
+  const {discos, cargando, borrarDisco} = useDiscos();
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
   const [textoFiltro, setTextoFiltro] = useState("");
   const [mensajeEliminado, setMensajeEliminado] = useState("");

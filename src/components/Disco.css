@@ -1,95 +1,36 @@
 .disco-item {
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
+  align-items: center;     /* centra verticalmente */
+  gap: 16px;               /* espacio entre columnas */
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  transition: background-color 0.2s;
+  border-bottom: 1px solid #ccc;
+
 }
 
-.disco-item:hover {
-  background-color: #f9f9f9;
-}
-
-/* Carátula del disco */
-.disco-caratula {
+.disco-imagen img {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 4px;
-  flex-shrink: 0;
 }
 
-/* Información del disco */
+.disco-imagen .sin-imagen {
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .disco-info {
-  flex: 1;
+  flex: 1;                 /* ocupa el espacio central */
+  cursor: pointer;
+  
 }
 
-.disco-info h3 {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #333;
-}
-
-.disco-info ul {
-  margin: 5px 0 0 0;
-  padding-left: 15px;
-  list-style-type: disc;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* Botones de acción */
 .disco-acciones {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.disco-acciones button {
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.disco-acciones button:first-child {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.disco-acciones button:first-child:hover {
-  background-color: #0056b3;
-}
-
-.disco-acciones button:last-child {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.disco-acciones button:last-child:hover {
-  background-color: #a71d2a;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .disco-item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .disco-info ul {
-    padding-left: 0;
-    list-style-type: none;
-  }
-
-  .disco-acciones {
-    flex-direction: row;
-    gap: 10px;
-    margin-top: 10px;
-  }
+  align-items: center;
+  gap: 8px;
+  
 }
