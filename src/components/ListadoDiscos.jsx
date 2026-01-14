@@ -45,7 +45,7 @@ const ListadoDiscos = () => {
     try {
       const discoAEliminar = discos.find(d => d.id === id);
       await borrarDisco(id);
-      setMensajeEliminado(`Disco "${discoAEliminar?.nombreDisco}" eliminado.`);
+      setMensajeEliminado(`Disco "${discoAEliminar?.nombreDisco}" eliminado.`);//Si discoAEliminar existe utiliza nombreDusco.
     } catch (error) {
       console.error(error);
       setMensajeEliminado("Error al eliminar el disco.");
