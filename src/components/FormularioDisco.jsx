@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./FormularioDisco.css";
 import Errores from "./Errores.jsx";
-import { validarDiscoCompleto } from "../../biblioteca/funciones.js";
-import { ContextoDiscos } from "../context/ProveedorDiscos.jsx";
+import { validarDiscoCompleto } from "../funciones/funciones.js";
+import { useDiscos } from "../hooks/useDiscos.js";
 
 //Formulario para insertar o editar disco.
 const FormularioDisco = () => {
-  const { discos, guardarDisco, editarDiscoCompleto } =
-    useContext(ContextoDiscos); //Para consumir los datos del contexto.
+  const { discos, guardarDisco, editarDiscoCompleto, cargando} = useDiscos(); //Para consumir los datos del contexto.
   const { id } = useParams(); //Obtenemos el id del elemento que queremos editar.
   const navigate = useNavigate(); //Para redirigir despues de actualizar un disco.
   const esEdicion = !!id;
@@ -33,6 +32,10 @@ const FormularioDisco = () => {
 
   // Cargar datos del disco si estamos editando
   useEffect(() => {
+
+    //Protección por si el contexto aún no se ha inicializado.
+    if(!Array.isArray(discos)) return;
+
     if (esEdicion && discos.length > 0) {
       const discoEncontrado = discos.find((d) => d.id === id);
       if (discoEncontrado) {
@@ -51,64 +54,21 @@ const FormularioDisco = () => {
   }, [id, discos, esEdicion]);
 
   /* Actualiza el estado del formulario cuando cambia un campo */
-/*   const actualizarDato = (e) => {
-    const { name, value, type, checked } = e.target;
-    const nuevoValor = type === "checkbox" ? checked : value;
 
-    const discoActualizado = {
-      ...disco,
-      [name]: nuevoValor,
-    };
-
-    setDisco(discoActualizado);
-    setMensaje({ tipo: "", texto: "" });
-
-    validarCampo(discoActualizado, name);
-  }; */
     const actualizarDato = (evento) => {
     const { name, value, type, checked } = evento.target;
     const nuevoValor = type === "checkbox" ? checked : value;//ternaria para tomar el valor sobre el tipo de dato correcto.
 
-    // Usar función de actualización para asegurar que se actualiza correctamente
-    setDisco((prevDisco) => ({
-      ...prevDisco, [name]: nuevoValor,
+   
+    setDisco((prev)=>({
+      ...prev,
+      [name]:nuevoValor
     }));
-    
     setMensaje({ tipo: "", texto: "" });
-    validarCampo(name, nuevoValor);
+    
   };
 
-  /* Valida un campo específico del formulario */
-  /* const validarCampo = (nombreCampo, valor) => {
-    setDisco((prevDisco) => {
-      const discoTemporal = { ...prevDisco, [nombreCampo]: valor };
-      const erroresCompletos = validarDiscoCompleto(discoTemporal);
 
-      // Si se modifica tipoGrupo o grupo, validar ambos campos
-       if (nombreCampo === "tipoGrupo" || nombreCampo === "grupo") {
-        setErrores((erroresPrevios) => ({
-          ...erroresPrevios,
-          grupo: erroresCompletos.grupo || [],
-        }));
-      } else {
-        setErrores((erroresPrevios) => ({
-          ...erroresPrevios,
-          [nombreCampo]: erroresCompletos[nombreCampo] || [],
-        }));
-      } 
-
-      return discoTemporal;
-    });
-  }; */
-  const validarCampo = (nombreCampo, valor) => { const discoTemporal = { ...disco, [nombreCampo]: valor }; const erroresCompletos = validarDiscoCompleto(discoTemporal); setDisco(discoTemporal); setErrores((erroresPrevios) => { const nuevosErrores = { ...erroresPrevios, [nombreCampo]: erroresCompletos[nombreCampo] || [] }; if (nombreCampo === "tipoGrupo" || nombreCampo === "grupo") { nuevosErrores.grupo = erroresCompletos.grupo || []; } return nuevosErrores; }); };
-/*   const validarCampo = (discoActualizado, campo) => {
-    const erroresCompletos = validarDiscoCompleto(discoActualizado);
-
-    setErrores((prev) => ({
-      ...prev,
-      [campo]: erroresCompletos[campo] || [],
-    }));
-  }; */
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
 
@@ -181,12 +141,12 @@ const FormularioDisco = () => {
   return (
     <div className="contenedor-formulario-disco">
       <h2>{esEdicion ? "Editar Disco" : "Insertar Disco"}</h2>
+
       <form onSubmit={manejarEnvio} className="formulario-disco">
+
         {/* Nombre del disco */}
         <div className="campo-formulario">
-          <label htmlFor="nombreDisco">
-            Nombre del disco <span className="obligatorio">*</span>
-          </label>
+          <label htmlFor="nombreDisco">Nombre del disco <span className="obligatorio">*</span></label>
           <input
             type="text"
             id="nombreDisco"
@@ -194,7 +154,7 @@ const FormularioDisco = () => {
             value={disco.nombreDisco}
             onChange={actualizarDato}
             className={`input-formulario ${obtenerClaseError("nombreDisco")}`}
-            placeholder="Título del disco"
+            placeholder="Nombre del disco"
           />
         </div>
 
@@ -259,9 +219,7 @@ const FormularioDisco = () => {
 
         {/* Género musical */}
         <div className="campo-formulario">
-          <label htmlFor="genero">
-            Género de música <span className="obligatorio">*</span>
-          </label>
+          <label htmlFor="genero">Género de música <span className="obligatorio">*</span></label>
           <select
             id="genero"
             name="genero"
@@ -327,15 +285,12 @@ const FormularioDisco = () => {
         </div>
 
         <button type="submit" className="boton-guardar">
-          {esEdicion ? "Actualizar Datos" : "Guardar"}
+          {cargando ? "Guardando...." : esEdicion ? "Actualizar Datos" : "Guardar"}
         </button>
       </form>
 
       {mensaje.texto && (
-        <div
-          className={`mensaje-formulario ${mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"
-            }`}
-        >
+        <div className={`mensaje-formulario ${mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"}`}>
           {mensaje.texto}
         </div>
       )}

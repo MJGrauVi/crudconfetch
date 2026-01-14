@@ -8,6 +8,8 @@ import {useDiscos} from "../hooks/useDiscos.js";
 
 const ListadoDiscos = () => {
   const {discos, cargando, borrarDisco} = useDiscos();
+
+  //Estados
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
   const [textoFiltro, setTextoFiltro] = useState("");
   const [mensajeEliminado, setMensajeEliminado] = useState("");
@@ -32,6 +34,7 @@ const ListadoDiscos = () => {
   const manejarCambioFiltro = useCallback(e => setTextoFiltro(e.target.value), []);
   const limpiarFiltro = useCallback(() => setTextoFiltro(""), []);
 
+  //Si cuando hacemos toggle se cambia de disco
   const toggleDisco = useCallback(id => {
     setDiscosFiltrados(prev =>
       prev.map(d => (d.id === id ? { ...d, expandido: !d.expandido } : d))
@@ -62,7 +65,7 @@ const ListadoDiscos = () => {
     <div className="contenedor-listado-discos">
       <h2>Listado de Discos</h2>
 
-     {/*  <MensajeTemporal texto={mensajeEliminado} /> */}
+      {mensajeEliminado && <MensajeTemporal texto={mensajeEliminado} />}{/* Muestra mensaje al clicar el Borrar. */}
 
 {/* Sección de filtrado. */}
       <div className="controles-filtrado">
