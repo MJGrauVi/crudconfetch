@@ -1,5 +1,5 @@
 "use strict";
- const validarDiscoCompleto = ({ nombreDisco, url_caratula, tipoGrupo, grupo, genero, lanzamiento, localizacion }) => {
+ const validarDiscoCompleto = ({ nombreDisco, tipoGrupo, grupo, genero, lanzamiento, localizacion }) => {
     let errores = [];
     const regExp = /^[A-Za-z\s]{4,}$/;
     const localizaRegExp = /^ES-\d{3}[A-Z]{2}$/;
@@ -11,6 +11,7 @@
    /*   if (url_caratula) {
         errores.push("La carátula no es obligatorio.");
     } */
+   
     if (!tipoGrupo || tipoGrupo.length < 4) {
         errores.push("El tipo de Grupo es obligatorio y debe tener al menos 4 caracteres.");
     }

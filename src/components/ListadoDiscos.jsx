@@ -3,11 +3,11 @@ import "./ListadoDiscos.css";
 import Disco from "./Disco.jsx";
 import MensajeTemporal from "./MensajeTemporal.jsx";
 import Cargando from "./Cargando.jsx";
-import {useDiscos} from "../hooks/useDiscos.js";
+import { useDiscos } from "../hooks/useDiscos.js";
 
 
 const ListadoDiscos = () => {
-  const {discos, cargando, borrarDisco} = useDiscos();
+  const { discos, cargando, borrarDisco } = useDiscos();
 
   //Estados
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
@@ -15,7 +15,7 @@ const ListadoDiscos = () => {
   const [mensajeEliminado, setMensajeEliminado] = useState("");
 
   // Filtrado de discos
-   useEffect(() => {
+  useEffect(() => {
     if (!textoFiltro.trim()) {
       setDiscosFiltrados(discos);
     } else {
@@ -29,7 +29,7 @@ const ListadoDiscos = () => {
         )
       );
     }
-  }, [textoFiltro, discos]); 
+  }, [textoFiltro, discos]);
 
   const manejarCambioFiltro = useCallback(e => setTextoFiltro(e.target.value), []);
   const limpiarFiltro = useCallback(() => setTextoFiltro(""), []);
@@ -65,9 +65,9 @@ const ListadoDiscos = () => {
     <div className="contenedor-listado-discos">
       <h2>Listado de Discos</h2>
 
-      {mensajeEliminado && <MensajeTemporal texto={mensajeEliminado} />}{/* Muestra mensaje al clicar el Borrar. */}
 
-{/* Sección de filtrado. */}
+
+      {/* Sección de filtrado. */}
       <div className="controles-filtrado">
         <input
           type="text"
@@ -79,7 +79,7 @@ const ListadoDiscos = () => {
           Limpiar
         </button>
       </div>
-{/* Mensaje del filtrado */}
+      {/* Mensaje del filtrado */}
       <p>
         Mostrando {discosFiltrados.length} de {discos.length} discos
         {textoFiltro.trim() && ` (filtrados por "${textoFiltro}")`}
@@ -96,6 +96,9 @@ const ListadoDiscos = () => {
           />
         ))}
       </div>
+
+      {mensajeEliminado && <MensajeTemporal texto={mensajeEliminado} />}{/* Muestra mensaje al clicar el Borrar. */}
+
     </div>
   );
 };

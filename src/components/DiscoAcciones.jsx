@@ -6,7 +6,7 @@ const DiscoAcciones = ({ disco, onBorrar }) => {
 
   return (
     <div className="disco-acciones">
-      <button onClick={e => { e.stopPropagation(); navigate(`/discos/${disco.id}/editar`); }}>
+      <button onClick={e => { e.stopPropagation(); navigate(`/discos/editar/${disco.id}`); }}>
         Editar
       </button>
       <button onClick={e => { e.stopPropagation(); onBorrar(); }}>

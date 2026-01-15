@@ -13,6 +13,7 @@ const Rutas = () => {
         <Route path="insertar" element={<Contenedor />} />
         <Route path="listadoDiscos" element={<ListadoDiscos />} />
         <Route path="discos/:id/editar" element={<Contenedor />} />
+        {/* <Route path="discos/:id" element={<Contenedor />} /> */}
         <Route path="*" element={<Error />}/>
       </Routes>
     </div>
