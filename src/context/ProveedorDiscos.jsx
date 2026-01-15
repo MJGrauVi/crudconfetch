@@ -9,10 +9,13 @@ const URL_API = "http://localhost:3001/discos";
 const ProveedorDiscos = ({ children }) => {
 
   const [discos, setDiscos] = useState([]);
+  const [discoExpandido, setDiscoExpandido] = useState(null);
 
-  const { cargando, error, cargarDatos, guardarDatos, editarDatosCompleto, editarParteDatos, borrarDatos } = useAPI();
+  const { cargando, error, cargarDatos, guardarDatos, editarDatosCompleto, editarParteDatos, borrarDatos} = useAPI();
 
-
+  const toggleDisco = (id) =>{
+    setDiscoExpandido(prev => (prev === id ? null : id));
+  }
   const cargarDiscos = async () => {
     try {
       const datos = await cargarDatos(URL_API);
@@ -57,6 +60,7 @@ const ProveedorDiscos = ({ children }) => {
         borrarDisco,
         editarDiscoCompleto,
         editarDiscoParcial,
+        discoExpandido, toggleDisco
       }}
     >
       {children}
