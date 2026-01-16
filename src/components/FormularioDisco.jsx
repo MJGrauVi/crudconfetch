@@ -34,10 +34,22 @@ const FormularioDisco = () => {
   // Cargar datos del disco si estamos editando
   useEffect(() => {
 
+    /*****************************************************************************debug***** */
+    console.log("=== USEEFFECT FORMULARIO ===");
+      console.log("id desde params:", id);
+      console.log("tipo id:", typeof id);
+      console.log("discos:", discos);
+      console.log("ids en discos:", discos?.map(d => ({ id: d.id, tipo: typeof d.id })));
+      /************************************************************************************** */
+
     //Protección por si el contexto aún no se ha inicializado.
     if (!Array.isArray(discos)) return;
 
     if (esEdicion && discos.length > 0) {
+/***************************************************************************************debug */
+      console.log("Modo EDICIÓN activado");
+
+
       const discoEncontrado = discos.find((d) => d.id === id);
       if (discoEncontrado) {
         setDisco({
@@ -69,8 +81,8 @@ const FormularioDisco = () => {
 
   };
 
-//SUBMIT DEL FORMULARIO.
-//CREAR.
+  //SUBMIT DEL FORMULARIO.
+  //CREAR.
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
 
@@ -104,7 +116,7 @@ const FormularioDisco = () => {
         listado_canciones: [],
       };
 
-  //EDITAR
+      //EDITAR
       //Sin estamos editando llamamos.
       if (esEdicion) {
         await editarDiscoCompleto(id, discoCompleto);
@@ -125,7 +137,7 @@ const FormularioDisco = () => {
       }
 
       setDisco(valoresIniciales);
-      setErrores({});
+      setErrores([]);
     } catch (error) {
       setMensaje({
         tipo: "error",
@@ -302,7 +314,7 @@ const FormularioDisco = () => {
       {todosLosErrores.length > 0 && (
         <Errores erroresMostrar={todosLosErrores} />
       )}
-      
+
 
     </div>
   );

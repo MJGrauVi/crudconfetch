@@ -51,8 +51,20 @@
       "tipoGrupo": "Solista",
       "grupo": "Fito y fitipaldi",
       "genero": "Rock",
-      "lanzamiento": "2010",
+      "lanzamiento": "2015",
       "localizacion": "ES-001AB",
+      "prestado": false,
+      "listado_canciones": []
+    },
+    {
+      "id": "953eb270-88b3-4dc7-a1d6-054ea5b362d3",
+      "nombreDisco": "Mar y montesDE",
+      "url_caratula": "",
+      "tipoGrupo": "Solista",
+      "grupo": "Fito y fitipaldi",
+      "genero": "Rock",
+      "lanzamiento": "2000",
+      "localizacion": "ES-001AA",
       "prestado": false,
       "listado_canciones": []
     }
