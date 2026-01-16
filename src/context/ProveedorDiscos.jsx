@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import useAPI from "../hooks/useAPI.js";
 
+
 //Creo el contexto
 const ContextoDiscos = createContext();
 
@@ -17,6 +18,7 @@ const ProveedorDiscos = ({ children }) => {
     setDiscoExpandido(prev => (prev === id ? null : id));
   }
   const cargarDiscos = async () => {
+ 
     try {
       const datos = await cargarDatos(URL_API);
       setDiscos(datos);
@@ -44,6 +46,7 @@ const ProveedorDiscos = ({ children }) => {
     await editarParteDatos(`${URL_API}/${id}`, datos);
     await cargarDiscos();
   };
+
 
   useEffect(() => {
     cargarDiscos();

@@ -2,21 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./FormularioDisco.css";
 import Errores from "./Errores.jsx";
-import Cargando from "./Cargando.jsx";
 import { validarDiscoCompleto } from "../funciones/funciones.js";
 import { useDiscos } from "../hooks/useDiscos.js";
 import MensajeTemporal from "./MensajeTemporal.jsx";
 
 //Formulario para insertar o editar disco.
-const FormularioDisco = () => {
-
+const FormularioDiscoNF = () => {
   const { discos, guardarDisco, editarDiscoCompleto, cargando } = useDiscos(); //Para consumir los datos del contexto.
   const { id } = useParams(); //Obtenemos el id del elemento que queremos editar.
   const navigate = useNavigate(); //Para redirigir despues de actualizar un disco.
-  const esEdicion = !!id; //Si hay id el la URL estará editando y sino está creando.
+  const esEdicion = !!id;
 
-
-console.log("RENDER FORMULARIO:", { cargando, discos });
   // Valores iniciales del formulario
   const valoresIniciales = {
     nombreDisco: "",
@@ -34,35 +30,28 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
   const generosMusicales = ["Rock", "Pop", "Jazz", "Clásica"];
-  
+
   // Cargar datos del disco si estamos editando
   useEffect(() => {
 
     /*****************************************************************************debug***** */
     console.log("=== USEEFFECT FORMULARIO ===");
-    console.log("discos:", discos);
-    console.log("id desde params:", id);
-    console.log("tipo id:", typeof id);
-    console.log("discos:", discos);
-    console.log("Valor de genero:", discos.genero);
-    console.log("ids en discos:", discos?.map(d => ({ id: d.id, tipo: typeof d.id })));
-    /************************************************************************************** */
-    
+      console.log("id desde params:", id);
+      console.log("tipo id:", typeof id);
+      console.log("discos:", discos);
+      console.log("ids en discos:", discos?.map(d => ({ id: d.id, tipo: typeof d.id })));
+      /************************************************************************************** */
+
     //Protección por si el contexto aún no se ha inicializado.
-    if (!Array.isArray(discos) || discos.length === 0) return;
+    if (!Array.isArray(discos)) return;
 
     if (esEdicion && discos.length > 0) {
-      /***************************************************************************************debug */
+/***************************************************************************************debug */
       console.log("Modo EDICIÓN activado");
 
+
       const discoEncontrado = discos.find((d) => d.id === id);
-
-      console.log("Resultado find:", discoEncontrado);
-
       if (discoEncontrado) {
-
-        console.log("Disco encontrado CORRECTO:", discoEncontrado);
-
         setDisco({
           nombreDisco: discoEncontrado.nombreDisco || "",
           url_caratula: discoEncontrado.url_caratula || "",
@@ -73,9 +62,6 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
           localizacion: discoEncontrado.localizacion || "",
           prestado: discoEncontrado.prestado || false,
         });
-      } else {
-        //poner aqui un else 
-        console.warn("No se encontró el disco con id:", id);
       }
     }
   }, [id, discos, esEdicion]);
@@ -87,18 +73,10 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
     const nuevoValor = type === "checkbox" ? checked : value;//ternaria para tomar el valor sobre el tipo de dato correcto.
 
 
-    console.log("Campo modificado:", name);
-    console.log("Valor nuevo:", nuevoValor);
-
-    setDisco((estadoPrevio) => {
-      const nuevoEstado = {
-        ...estadoPrevio,
-        [name]: nuevoValor
-      };
-      console.log("Estado disco actualizado:", nuevoEstado);
-      return nuevoEstado;
-    });
-
+    setDisco((estadoPrevio) => ({
+      ...estadoPrevio,
+      [name]: nuevoValor
+    }));
     setMensaje({ tipo: "", texto: "" });//Limpia mensaje antiguo.
 
   };
@@ -175,11 +153,7 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
     }; */
 
   const todosLosErrores = Object.values(errores).flat();
-//Renderizado bloqueante que sustituye al formulario.Muestra espiner mientras espera datos.
-  if (cargando) {
-  return <Cargando />;
-}
- 
+
   return (
     <div className="contenedor-formulario-disco">
       <h2>{esEdicion ? "Editar Disco" : "Insertar Disco"}</h2>
@@ -330,7 +304,7 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
           {cargando ? "Guardando...." : esEdicion ? "Actualizar Datos" : "Guardar"}
         </button>
       </form>
-     
+
       {mensaje.texto && (
         <div className={`mensaje-formulario ${mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"}`}>
           {mensaje.texto}
@@ -346,4 +320,4 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
   );
 };
 
-export default FormularioDisco;
+export default FormularioDiscoNF;

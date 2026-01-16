@@ -7,19 +7,23 @@ import Header from "./estructura/Header.jsx";
 import Footer from "./estructura/Footer.jsx";
 import ProveedorDiscos from "./context/ProveedorDiscos.jsx";
 
+
 const App = () => {
   return (
-    <ProveedorDiscos>
-      <div className="contenedor-app">
-        <Header>
-          <Menu />
-        </Header>
-        <Contenedor>
-          <Rutas />
-        </Contenedor>
-        <Footer />
-      </div>
-    </ProveedorDiscos>
+    <>
+      
+      <ProveedorDiscos>
+        <div className="contenedor-app">
+          <Header>
+            <Menu />
+          </Header>
+          <Contenedor>
+            <Rutas />
+          </Contenedor>
+          <Footer />
+        </div>
+      </ProveedorDiscos>
+    </>
   );
 };
 

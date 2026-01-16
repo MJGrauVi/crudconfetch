@@ -65,8 +65,6 @@ const ListadoDiscos = () => {
     <div className="contenedor-listado-discos">
       <h2>Listado de Discos</h2>
 
-
-
       {/* Sección de filtrado. */}
       <div className="controles-filtrado">
         <input

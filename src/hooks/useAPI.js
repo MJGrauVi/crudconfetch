@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const useAPI = () => {
   //Estos estados serán consumidos por el contexto en los siguientes casos:
   //Estado cuando hay una petición en curso.
-  const [cargando, setCargando] = useState(false);
+  const [cargando, setCargando] = useState(true);
   //Estado para errores de conexión con la API.
   const [error, setError] = useState(null);
 
@@ -15,7 +15,7 @@ const useAPI = () => {
 
     try {
       //Simulacion retardo carga datos.(Eliminaremos en producción)
-      //await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       const respuesta = await fetch(url, {
         headers: { "Content-Type": "application/json" },
