@@ -161,6 +161,7 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
       setDisco(valoresIniciales);
       setErrores([]);
     } catch (error) {
+      console.log(`Error`, error.mensaje);
       setMensaje({
         tipo: "error",
         texto: "Error al guardar el disco. Por favor, inténtelo de nuevo.",

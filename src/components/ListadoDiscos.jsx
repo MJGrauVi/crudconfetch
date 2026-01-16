@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./ListadoDiscos.css";
 import Disco from "./Disco.jsx";
 import MensajeTemporal from "./MensajeTemporal.jsx";
@@ -9,12 +9,12 @@ import { useDiscos } from "../hooks/useDiscos.js";
 const ListadoDiscos = () => {
   const { discos, cargando, borrarDisco } = useDiscos();
 
-  //Estados
+  //Estados.
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
   const [textoFiltro, setTextoFiltro] = useState("");
   const [mensajeEliminado, setMensajeEliminado] = useState("");
 
-  // Filtrado de discos
+  // Filtrado de discos.
   useEffect(() => {
     if (!textoFiltro.trim()) {
       setDiscosFiltrados(discos);
@@ -30,23 +30,24 @@ const ListadoDiscos = () => {
       );
     }
   }, [textoFiltro, discos]);
-  
-//Guardamos el texto introducido en el input de filtrado, por el cual buscamos discos.
-  const manejarCambioFiltro = useCallback(
-    (e) => setTextoFiltro(e.target.value),
-    [],
-  );
-  const limpiarFiltro = useCallback(() => setTextoFiltro(""), []);
 
-  //Si cuando hacemos toggle se cambia de disco
-  const toggleDisco = useCallback((id) => {
+  //Guardamos el texto introducido en el input de filtrado, por el cual buscamos discos.
+  const manejarCambioFiltro = (e) => {
+    setTextoFiltro(e.target.value);
+  };
+
+  const limpiarFiltro = () => {
+    setTextoFiltro("");
+  };
+
+  //Si cuando hacemos toggle se cambia de disco.
+  const toggleDisco = (id) => {
     setDiscosFiltrados((prev) =>
       prev.map((d) => (d.id === id ? { ...d, expandido: !d.expandido } : d)),
     );
-  }, []);
+  };
 
-  const handleBorrarDisco = useCallback(
-    async (id) => {
+  const handleBorrarDisco = async (id) => {
       try {
         const discoAEliminar = discos.find((d) => d.id === id);
         await borrarDisco(id);
@@ -57,10 +58,8 @@ const ListadoDiscos = () => {
         console.error(error);
         setMensajeEliminado("Error al eliminar el disco.");
       }
-    },
-    [discos, borrarDisco],
-  );
-
+    };
+  
   useEffect(() => {
     if (mensajeEliminado) {
       const timer = setTimeout(() => setMensajeEliminado(""), 3000);
@@ -75,22 +74,6 @@ const ListadoDiscos = () => {
       <h2>Listado de Discos</h2>
 
       {/* Sección de filtrado. */}
-
- {/*      <div className="controles-filtrado">
-        <input
-          type="text"
-          value={textoFiltro}
-          onChange={manejarCambioFiltro}
-          placeholder="Buscar por nombre, grupo o género..."
-        />
-        <button
-          type="button"
-          onClick={limpiarFiltro}
-          disabled={!textoFiltro.trim()}
-        >
-          Limpiar
-        </button>
-      </div> */}
 
       <FiltroDiscos
         textoFiltro={textoFiltro}

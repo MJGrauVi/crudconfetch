@@ -15,7 +15,7 @@ const useAPI = () => {
 
     try {
       //Simulacion retardo carga datos.(Eliminaremos en producción)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+     // await new Promise(resolve => setTimeout(resolve, 2000));
 
       const respuesta = await fetch(url, {
         headers: { "Content-Type": "application/json" },
