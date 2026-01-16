@@ -3,6 +3,7 @@ import "./ListadoDiscos.css";
 import Disco from "./Disco.jsx";
 import MensajeTemporal from "./MensajeTemporal.jsx";
 import Cargando from "./Cargando.jsx";
+import FiltroDiscos from "./FiltroDiscos.jsx";
 import { useDiscos } from "../hooks/useDiscos.js";
 
 
@@ -66,6 +67,7 @@ const ListadoDiscos = () => {
       <h2>Listado de Discos</h2>
 
       {/* Sección de filtrado. */}
+
       <div className="controles-filtrado">
         <input
           type="text"
@@ -77,6 +79,7 @@ const ListadoDiscos = () => {
           Limpiar
         </button>
       </div>
+      <FiltroDiscos />
       {/* Mensaje del filtrado */}
       <p>
         Mostrando {discosFiltrados.length} de {discos.length} discos

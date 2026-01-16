@@ -43,18 +43,6 @@
         "http://localhost:3000/canciones/G11d9f8c",
         "http://localhost:3000/canciones/H11d9f8c"
       ]
-    },
-    {
-      "id": "3340619f-8146-4581-bb52-767a62d10f7b",
-      "nombreDisco": "El canto del loco",
-      "url_caratula": "",
-      "tipoGrupo": "Solista",
-      "grupo": "Fito y fitipaldi",
-      "genero": "Rock",
-      "lanzamiento": "2015",
-      "localizacion": "ES-001AB",
-      "prestado": false,
-      "listado_canciones": []
     }
   ]
 }
