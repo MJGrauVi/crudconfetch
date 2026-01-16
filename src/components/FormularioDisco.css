@@ -21,7 +21,9 @@
   flex-direction: column;
   gap: 5px;
 }
-
+select {
+  width: 80%;
+}
 .campo-formulario label {
   font-weight: 500;
   color: #34495e;
@@ -30,7 +32,12 @@
 .obligatorio {
   color: red;
 }
-
+form input,
+form select,
+form button {
+  width: 100%;
+  box-sizing: border-box; /* evita que el padding rompa el ancho */
+}
 .input-formulario {
   padding: 10px;
   border: 2px solid #bdc3c7;
