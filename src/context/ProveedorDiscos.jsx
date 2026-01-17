@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import useAPI from "../hooks/useAPI.js";
 
 
-//Creo el contexto
+//Creo el context
 const ContextoDiscos = createContext();
 
 const URL_API = "http://localhost:3001/discos";
@@ -12,7 +12,8 @@ const ProveedorDiscos = ({ children }) => {
   const [discos, setDiscos] = useState([]);
   const [discoExpandido, setDiscoExpandido] = useState(null);
 
-  const { cargando, error, cargarDatos, guardarDatos, editarDatosCompleto, editarParteDatos, borrarDatos} = useAPI();
+   const { cargando, error, cargarDatos, guardarDatos, editarDatosCompleto, editarParteDatos, borrarDatos} = useAPI(); 
+  
 
   const toggleDisco = (id) =>{
     setDiscoExpandido(prev => (prev === id ? null : id));
@@ -52,6 +53,7 @@ const ProveedorDiscos = ({ children }) => {
     cargarDiscos();
   }, []);
 
+  //Provider proporciona los datos a los componentes a través de la propiedad value.
   return (
     <ContextoDiscos.Provider
       value={{

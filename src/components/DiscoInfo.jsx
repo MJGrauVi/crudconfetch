@@ -1,7 +1,7 @@
 import React from 'react'
 import "./DiscoInfo.css";
 import DiscoDetalle from "./DiscoDetalle.jsx";
-import { useDiscos } from "../hooks/useDiscos.js";
+import  useDiscos  from "../hooks/useDiscos.js";
 
 const DiscoInfo = ({ disco}) => {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Disco.css";
 import DiscoAcciones from './DiscoAcciones.jsx';
-import {useDiscos} from "../hooks/useDiscos.js";
+import useDiscos from "../hooks/useDiscos.js";
 import DiscoInfo from './DiscoInfo.jsx';
 
 const Disco = ({disco}) => {

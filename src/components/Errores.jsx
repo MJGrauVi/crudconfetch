@@ -1,22 +1,18 @@
-import React, { Fragment } from "react";
 import "./Errores.css";
-import { useDiscos } from "../hooks/useDiscos.js";
-
+//Este componente solo depende del formulario por lo que no hace falta usar contexto.
 const Errores = ({ erroresMostrar }) => {
-  // La desestructuración de arriba es equivalente a la siguiente línea:
-  //const { erroresMostrar } = props;
-  // Que a su vez equivale al método tradicional:
-  //const erroresMostrar = props.erroresMostrar;
+
+  if (!Array.isArray(erroresMostrar) || erroresMostrar.length === 0) {
+    return null;
+  }
 
   return (
     <>
-      <h2>Control de errores.</h2>
-      <div className={erroresMostrar.length ? "errores" : "sinErrores"}>
-        {erroresMostrar.length
-          ? erroresMostrar.map((valor, indice) => {
-            return <h4 key={indice}>{valor}</h4>;
-          })
-          : "No se han encontrado errores en el formulario."}
+      <h2>Control de errores</h2>
+      <div className="errores">
+        {erroresMostrar.map((error, index) => (
+          <h4 key={index}>{error}</h4>
+        ))}
       </div>
     </>
   );

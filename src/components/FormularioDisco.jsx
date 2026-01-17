@@ -4,19 +4,17 @@ import "./FormularioDisco.css";
 import Errores from "./Errores.jsx";
 import Cargando from "./Cargando.jsx";
 import { validarDiscoCompleto } from "../funciones/funciones.js";
-import { useDiscos } from "../hooks/useDiscos.js";
+import useDiscos from "../hooks/useDiscos.js";
 import MensajeTemporal from "./MensajeTemporal.jsx";
 
 //Formulario para insertar o editar disco.
 const FormularioDisco = () => {
-
   const { discos, guardarDisco, editarDiscoCompleto, cargando } = useDiscos(); //Para consumir los datos del contexto.
   const { id } = useParams(); //Obtenemos el id del elemento que queremos editar.
   const navigate = useNavigate(); //Para redirigir despues de actualizar un disco.
   const esEdicion = !!id; //Si hay id el la URL estará editando y sino está creando.
 
-
-console.log("RENDER FORMULARIO:", { cargando, discos });
+  console.log("RENDER FORMULARIO:", { cargando, discos });
   // Valores iniciales del formulario
   const valoresIniciales = {
     nombreDisco: "",
@@ -34,10 +32,9 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
   const [mensaje, setMensaje] = useState({ tipo: "", texto: "" });
 
   const generosMusicales = ["Rock", "Pop", "Jazz", "Clásica"];
-  
+
   // Cargar datos del disco si estamos editando
   useEffect(() => {
-
     /*****************************************************************************debug***** */
     console.log("=== USEEFFECT FORMULARIO ===");
     console.log("discos:", discos);
@@ -45,38 +42,33 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
     console.log("tipo id:", typeof id);
     console.log("discos:", discos);
     console.log("Valor de genero:", discos.genero);
-    console.log("ids en discos:", discos?.map(d => ({ id: d.id, tipo: typeof d.id })));
+    console.log(
+      "ids en discos:",
+      discos?.map((d) => ({ id: d.id, tipo: typeof d.id })),
+    );
     /************************************************************************************** */
-    
+
+    if (!esEdicion) return;
     //Protección por si el contexto aún no se ha inicializado.
     if (!Array.isArray(discos) || discos.length === 0) return;
 
-    if (esEdicion && discos.length > 0) {
+    const discoEncontrado = discos.find((d) => String(d.id) === id);
+
+    if (discoEncontrado) {
       /***************************************************************************************debug */
       console.log("Modo EDICIÓN activado");
-
-      const discoEncontrado = discos.find((d) => d.id === id);
-
       console.log("Resultado find:", discoEncontrado);
 
-      if (discoEncontrado) {
-
-        console.log("Disco encontrado CORRECTO:", discoEncontrado);
-
-        setDisco({
-          nombreDisco: discoEncontrado.nombreDisco || "",
-          url_caratula: discoEncontrado.url_caratula || "",
-          tipoGrupo: discoEncontrado.tipoGrupo || "",
-          grupo: discoEncontrado.grupo || "",
-          genero: discoEncontrado.genero || "",
-          lanzamiento: discoEncontrado.lanzamiento || "",
-          localizacion: discoEncontrado.localizacion || "",
-          prestado: discoEncontrado.prestado || false,
-        });
-      } else {
-        //poner aqui un else 
-        console.warn("No se encontró el disco con id:", id);
-      }
+      setDisco({
+        nombreDisco: discoEncontrado.nombreDisco || "",
+        url_caratula: discoEncontrado.url_caratula || "",
+        tipoGrupo: discoEncontrado.tipoGrupo || "",
+        grupo: discoEncontrado.grupo || "",
+        genero: discoEncontrado.genero || "",
+        lanzamiento: discoEncontrado.lanzamiento || "",
+        localizacion: discoEncontrado.localizacion || "",
+        prestado: discoEncontrado.prestado || false,
+      });
     }
   }, [id, discos, esEdicion]);
 
@@ -84,8 +76,7 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
 
   const actualizarDato = (evento) => {
     const { name, value, type, checked } = evento.target;
-    const nuevoValor = type === "checkbox" ? checked : value;//ternaria para tomar el valor sobre el tipo de dato correcto.
-
+    const nuevoValor = type === "checkbox" ? checked : value; //ternaria para tomar el valor sobre el tipo de dato correcto.
 
     console.log("Campo modificado:", name);
     console.log("Valor nuevo:", nuevoValor);
@@ -93,14 +84,13 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
     setDisco((estadoPrevio) => {
       const nuevoEstado = {
         ...estadoPrevio,
-        [name]: nuevoValor
+        [name]: nuevoValor,
       };
       console.log("Estado disco actualizado:", nuevoEstado);
       return nuevoEstado;
     });
 
-    setMensaje({ tipo: "", texto: "" });//Limpia mensaje antiguo.
-
+    setMensaje({ tipo: "", texto: "" }); //Limpia mensaje antiguo.
   };
 
   //SUBMIT DEL FORMULARIO.
@@ -110,7 +100,7 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
 
     // Validar todos los campos
     const listaErroresValidacion = validarDiscoCompleto(disco);
-    console.log()
+    console.log();
     setErrores(listaErroresValidacion);
 
     //Si ha habido errores de validación lanzamos mensaje del tipo "error".
@@ -124,8 +114,8 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
     //Si todo ha ido bien creamos el disco.
     try {
       // Crear el objeto disco completo según la estructura de la API.
-      //Sin no estamos editando, creamos un id para el nuevo disco.
-      const discoCompleto = {
+      //Si no estamos editando, creamos un id para el nuevo disco.
+      /*       const discoCompleto = {
         id: esEdicion ? id : crypto.randomUUID(),
         nombreDisco: disco.nombreDisco.trim(),
         url_caratula: disco.url_caratula.trim(),
@@ -136,8 +126,18 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
         localizacion: disco.localizacion.toUpperCase().trim(),
         prestado: disco.prestado,
         listado_canciones: [],
+      }; */
+      const discoCompleto = {
+        nombreDisco: disco.nombreDisco.trim(),
+        url_caratula: disco.url_caratula.trim(),
+        tipoGrupo: disco.tipoGrupo,
+        grupo: disco.grupo.trim(),
+        genero: disco.genero,
+        lanzamiento: disco.lanzamiento.trim(),
+        localizacion: disco.localizacion.toUpperCase().trim(),
+        prestado: disco.prestado,
+        listado_canciones: [],
       };
-
       //EDITAR
       //Sin estamos editando llamamos.
       if (esEdicion) {
@@ -148,7 +148,7 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
         });
         setTimeout(() => {
           navigate("/listadoDiscos");
-        }, 1500);
+        }, 5000);
       } else {
         //Guardamos el disco creado.
         await guardarDisco(discoCompleto);
@@ -156,12 +156,15 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
           tipo: "exito",
           texto: `Disco "${discoCompleto.nombreDisco}" añadido correctamente a la colección.`,
         });
+        setTimeout(() => {
+          navigate("/listadoDiscos");
+        }, 5000);
       }
 
       setDisco(valoresIniciales);
       setErrores([]);
     } catch (error) {
-      console.log(`Error`, error.mensaje);
+      console.error(error);
       setMensaje({
         tipo: "error",
         texto: "Error al guardar el disco. Por favor, inténtelo de nuevo.",
@@ -176,20 +179,21 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
     }; */
 
   const todosLosErrores = Object.values(errores).flat();
-//Renderizado bloqueante que sustituye al formulario.Muestra espiner mientras espera datos.
+  //Renderizado bloqueante que sustituye al formulario.Muestra espiner mientras espera datos.
   if (cargando) {
-  return <Cargando />;
-}
- 
+    return <Cargando />;
+  }
+
   return (
     <div className="contenedor-formulario-disco">
       <h2>{esEdicion ? "Editar Disco" : "Insertar Disco"}</h2>
 
       <form onSubmit={manejarEnvio} className="formulario-disco">
-
         {/* Nombre del disco */}
         <div className="campo-formulario">
-          <label htmlFor="nombreDisco">Nombre del disco <span className="obligatorio">*</span></label>
+          <label htmlFor="nombreDisco">
+            Nombre del disco <span className="obligatorio">*</span>
+          </label>
           <input
             type="text"
             id="nombreDisco"
@@ -262,7 +266,9 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
 
         {/* Género musical */}
         <div className="campo-formulario">
-          <label htmlFor="genero">Género musical <span className="obligatorio">*</span></label>
+          <label htmlFor="genero">
+            Género musical <span className="obligatorio">*</span>
+          </label>
           <select
             id="genero"
             name="genero"
@@ -328,12 +334,18 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
         </div>
 
         <button type="submit" className="boton-guardar">
-          {cargando ? "Guardando...." : esEdicion ? "Actualizar Datos" : "Guardar"}
+          {cargando
+            ? "Guardando...."
+            : esEdicion
+              ? "Actualizar Datos"
+              : "Guardar"}
         </button>
       </form>
-     
+
       {mensaje.texto && (
-        <div className={`mensaje-formulario ${mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"}`}>
+        <div
+          className={`mensaje-formulario ${mensaje.tipo === "exito" ? "mensaje-exito" : "mensaje-error"}`}
+        >
           {mensaje.texto}
         </div>
       )}
@@ -341,8 +353,6 @@ console.log("RENDER FORMULARIO:", { cargando, discos });
       {todosLosErrores.length > 0 && (
         <Errores erroresMostrar={todosLosErrores} />
       )}
-
-
     </div>
   );
 };

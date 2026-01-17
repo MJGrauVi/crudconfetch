@@ -4,32 +4,27 @@ import Disco from "./Disco.jsx";
 import MensajeTemporal from "./MensajeTemporal.jsx";
 import Cargando from "./Cargando.jsx";
 import FiltroDiscos from "./FiltroDiscos.jsx";
-import { useDiscos } from "../hooks/useDiscos.js";
+import useDiscos from "../hooks/useDiscos.js";
 
 const ListadoDiscos = () => {
-  const { discos, cargando, borrarDisco } = useDiscos();
+  const { discos, cargando, borrarDisco, discoExpandido, toggleDisco } =
+    useDiscos();
 
   //Estados.
-  const [discosFiltrados, setDiscosFiltrados] = useState([]);
+
   const [textoFiltro, setTextoFiltro] = useState("");
   const [mensajeEliminado, setMensajeEliminado] = useState("");
 
   // Filtrado de discos.
-  useEffect(() => {
-    if (!textoFiltro.trim()) {
-      setDiscosFiltrados(discos);
-    } else {
-      const texto = textoFiltro.toLowerCase().trim();
-      setDiscosFiltrados(
-        discos.filter(
-          (d) =>
-            d.nombreDisco?.toLowerCase().includes(texto) ||
-            d.grupo?.toLowerCase().includes(texto) ||
-            d.genero?.toLowerCase().includes(texto),
-        ),
-      );
-    }
-  }, [textoFiltro, discos]);
+  const discosFiltrados = discos.filter((d) => {
+    if (!textoFiltro.trim()) return true;
+    const texto = textoFiltro.toLowerCase();
+    return (
+      d.nombreDisco?.toLowerCase().includes(texto) ||
+      d.grupo?.toLowerCase().includes(texto) ||
+      d.genero?.toLowerCase().includes(texto)
+    );
+  });
 
   //Guardamos el texto introducido en el input de filtrado, por el cual buscamos discos.
   const manejarCambioFiltro = (e) => {
@@ -41,28 +36,27 @@ const ListadoDiscos = () => {
   };
 
   //Si cuando hacemos toggle se cambia de disco.
-  const toggleDisco = (id) => {
+  /*   const toggleDisco = (id) => {
     setDiscosFiltrados((prev) =>
       prev.map((d) => (d.id === id ? { ...d, expandido: !d.expandido } : d)),
     );
-  };
+  }; */
 
-  const handleBorrarDisco = async (id) => {
-      try {
-        const discoAEliminar = discos.find((d) => d.id === id);
-        await borrarDisco(id);
-        setMensajeEliminado(
-          `Disco "${discoAEliminar?.nombreDisco}" eliminado.`,
-        ); //Si discoAEliminar existe utiliza nombreDusco.
-      } catch (error) {
-        console.error(error);
-        setMensajeEliminado("Error al eliminar el disco.");
-      }
-    };
-  
+const handleBorrarDisco = async (id) => {
+  const discoAEliminar = discos.find(d => String(d.id) === id);
+  try {
+    await borrarDisco(id);
+    console.log("Seteando mensajeEliminado:", discoAEliminar?.nombreDisco); // <-- debug
+    setMensajeEliminado(`Disco "${discoAEliminar?.nombreDisco}" eliminado.`);
+  } catch {
+    console.log("Error al borrar disco");
+    setMensajeEliminado("Error al eliminar el disco.");
+  }
+};
+
   useEffect(() => {
     if (mensajeEliminado) {
-      const timer = setTimeout(() => setMensajeEliminado(""), 3000);
+      const timer = setTimeout(() => setMensajeEliminado(""), 5000);
       return () => clearTimeout(timer);
     }
   }, [mensajeEliminado]);
@@ -91,15 +85,15 @@ const ListadoDiscos = () => {
           <Disco
             key={disco.id}
             disco={disco}
-            expandido={disco.expandido || false}
+            expandido={discoExpandido === disco.id}
             onToggle={() => toggleDisco(disco.id)}
             onBorrar={() => handleBorrarDisco(disco.id)}
           />
         ))}
       </div>
-
-      {mensajeEliminado && <MensajeTemporal texto={mensajeEliminado} />}
-      {/* Muestra mensaje al clicar el Borrar. */}
+      {console.log("Render mensajeEliminado:", mensajeEliminado)}
+      {mensajeEliminado && (<div className={`mensaje-eliminado ${!mensajeEliminado ? 'oculto' : ''}`}>{mensajeEliminado}</div>)}
+      {/* Muestra mensaje al clicar en Borrar. */}
     </div>
   );
 };
