@@ -1,5 +1,5 @@
 "use strict";
- const validarDiscoCompleto = ({ nombreDisco, tipoGrupo, grupo, genero, lanzamiento, localizacion }) => {
+ const validarDisco = ({ nombreDisco, tipoGrupo, grupo, genero, lanzamiento, localizacion }) => {
     let errores = [];
     const regExp = /^[A-Za-z\s]{4,}$/;
     const localizaRegExp = /^ES-\d{3}[A-Z]{2}$/;
@@ -33,4 +33,4 @@
 
 
 
-export { validarDiscoCompleto};
+export { validarDisco};

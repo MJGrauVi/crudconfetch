@@ -35,28 +35,21 @@ const ListadoDiscos = () => {
     setTextoFiltro("");
   };
 
-  //Si cuando hacemos toggle se cambia de disco.
-  /*   const toggleDisco = (id) => {
-    setDiscosFiltrados((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, expandido: !d.expandido } : d)),
-    );
-  }; */
-
-const handleBorrarDisco = async (id) => {
-  const discoAEliminar = discos.find(d => String(d.id) === id);
-  try {
-    await borrarDisco(id);
-    console.log("Seteando mensajeEliminado:", discoAEliminar?.nombreDisco); // <-- debug
-    setMensajeEliminado(`Disco "${discoAEliminar?.nombreDisco}" eliminado.`);
-  } catch {
-    console.log("Error al borrar disco");
-    setMensajeEliminado("Error al eliminar el disco.");
-  }
-};
-
+  const handleBorrarDisco = async (id) => {
+    //LLamamos a borrarDisco del hook con el id del disco a eliminar. Informamos al usuario.
+    const discoAEliminar = discos.find((d) => String(d.id) === String(id));
+    try {
+      await borrarDisco(id);
+      setMensajeEliminado(`Disco "${discoAEliminar?.nombreDisco}" eliminado.`);
+    } catch {
+      console.log("Error al borrar disco");
+      setMensajeEliminado("Error al eliminar el disco.");
+    }
+  };
+  //Eliminamos el mensaje a los segundos que indica el timer.
   useEffect(() => {
     if (mensajeEliminado) {
-      const timer = setTimeout(() => setMensajeEliminado(""), 5000);
+      const timer = setTimeout(() => setMensajeEliminado(""), 2000);
       return () => clearTimeout(timer);
     }
   }, [mensajeEliminado]);
@@ -91,8 +84,12 @@ const handleBorrarDisco = async (id) => {
           />
         ))}
       </div>
-      {console.log("Render mensajeEliminado:", mensajeEliminado)}
-      {mensajeEliminado && (<div className={`mensaje-eliminado ${!mensajeEliminado ? 'oculto' : ''}`}>{mensajeEliminado}</div>)}
+      
+      {mensajeEliminado && (
+        <div className={`mensaje-eliminado ${!mensajeEliminado ? "oculto" : ""}`}>
+          {mensajeEliminado}
+        </div>
+      )}
       {/* Muestra mensaje al clicar en Borrar. */}
     </div>
   );

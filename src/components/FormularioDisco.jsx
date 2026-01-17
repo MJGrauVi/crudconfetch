@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./FormularioDisco.css";
 import Errores from "./Errores.jsx";
 import Cargando from "./Cargando.jsx";
-import { validarDiscoCompleto } from "../funciones/funciones.js";
+import { validarDisco } from "../funciones/funciones.js";
 import useDiscos from "../hooks/useDiscos.js";
-import MensajeTemporal from "./MensajeTemporal.jsx";
+
 
 //Formulario para insertar o editar disco.
 const FormularioDisco = () => {
@@ -14,7 +14,6 @@ const FormularioDisco = () => {
   const navigate = useNavigate(); //Para redirigir despues de actualizar un disco.
   const esEdicion = !!id; //Si hay id el la URL estará editando y sino está creando.
 
-  console.log("RENDER FORMULARIO:", { cargando, discos });
   // Valores iniciales del formulario
   const valoresIniciales = {
     nombreDisco: "",
@@ -35,18 +34,6 @@ const FormularioDisco = () => {
 
   // Cargar datos del disco si estamos editando
   useEffect(() => {
-    /*****************************************************************************debug***** */
-    console.log("=== USEEFFECT FORMULARIO ===");
-    console.log("discos:", discos);
-    console.log("id desde params:", id);
-    console.log("tipo id:", typeof id);
-    console.log("discos:", discos);
-    console.log("Valor de genero:", discos.genero);
-    console.log(
-      "ids en discos:",
-      discos?.map((d) => ({ id: d.id, tipo: typeof d.id })),
-    );
-    /************************************************************************************** */
 
     if (!esEdicion) return;
     //Protección por si el contexto aún no se ha inicializado.
@@ -55,9 +42,6 @@ const FormularioDisco = () => {
     const discoEncontrado = discos.find((d) => String(d.id) === id);
 
     if (discoEncontrado) {
-      /***************************************************************************************debug */
-      console.log("Modo EDICIÓN activado");
-      console.log("Resultado find:", discoEncontrado);
 
       setDisco({
         nombreDisco: discoEncontrado.nombreDisco || "",
@@ -78,15 +62,11 @@ const FormularioDisco = () => {
     const { name, value, type, checked } = evento.target;
     const nuevoValor = type === "checkbox" ? checked : value; //ternaria para tomar el valor sobre el tipo de dato correcto.
 
-    console.log("Campo modificado:", name);
-    console.log("Valor nuevo:", nuevoValor);
-
     setDisco((estadoPrevio) => {
       const nuevoEstado = {
         ...estadoPrevio,
         [name]: nuevoValor,
       };
-      console.log("Estado disco actualizado:", nuevoEstado);
       return nuevoEstado;
     });
 
@@ -96,11 +76,10 @@ const FormularioDisco = () => {
   //SUBMIT DEL FORMULARIO.
   //CREAR.
   const manejarEnvio = async (evento) => {
-    evento.preventDefault();
+    evento.preventDefault();//Eliminamos el comportamiento por defecto de submit en el form.
 
     // Validar todos los campos
-    const listaErroresValidacion = validarDiscoCompleto(disco);
-    console.log();
+    const listaErroresValidacion = validarDisco(disco);
     setErrores(listaErroresValidacion);
 
     //Si ha habido errores de validación lanzamos mensaje del tipo "error".
@@ -113,20 +92,8 @@ const FormularioDisco = () => {
     }
     //Si todo ha ido bien creamos el disco.
     try {
-      // Crear el objeto disco completo según la estructura de la API.
-      //Si no estamos editando, creamos un id para el nuevo disco.
-      /*       const discoCompleto = {
-        id: esEdicion ? id : crypto.randomUUID(),
-        nombreDisco: disco.nombreDisco.trim(),
-        url_caratula: disco.url_caratula.trim(),
-        tipoGrupo: disco.tipoGrupo,
-        grupo: disco.grupo.trim(),
-        genero: disco.genero,
-        lanzamiento: disco.lanzamiento.trim(),
-        localizacion: disco.localizacion.toUpperCase().trim(),
-        prestado: disco.prestado,
-        listado_canciones: [],
-      }; */
+      // Crear el objeto disco según la estructura de la API.
+   
       const discoCompleto = {
         nombreDisco: disco.nombreDisco.trim(),
         url_caratula: disco.url_caratula.trim(),
@@ -158,7 +125,7 @@ const FormularioDisco = () => {
         });
         setTimeout(() => {
           navigate("/listadoDiscos");
-        }, 5000);
+        }, 2000);
       }
 
       setDisco(valoresIniciales);
