@@ -1,43 +1,33 @@
 {
   "discos": [
     {
+      "id": "786a34d2",
       "nombreDisco": "Palabra de mujer",
       "url_caratula": "",
       "tipoGrupo": "Solista",
       "grupo": "Mónica Naranjo",
-      "genero": "Rock",
-      "lanzamiento": "2012",
-      "localizacion": "ES-100AA",
-      "prestado": false,
-      "listado_canciones": [],
-      "id": "786a34d2"
-    },
-    {
-      "id": "600a34d2",
-      "nombreDisco": "Un mar de confianza",
-      "url_caratula": "",
-      "tipoGrupo": "Solista",
-      "grupo": "Luz casal",
       "genero": "Pop",
-      "lanzamiento": "2001",
+      "lanzamiento": 2020,
       "localizacion": "ES-100AA",
       "listado_canciones": [
-        "http://localhost:3000/canciones/F11d9f8c",
-        "http://localhost:3000/canciones/G11d9f8c",
-        "http://localhost:3000/canciones/H11d9f8c"
+        "http://localhost:3000/cancioness/A11d9f8c",
+        "http://localhost:3000/canciones/B11d9f8c",
+        "http://localhost:3000/canciones/C11d9f8c"
       ]
     },
     {
-      "nombreDisco": "El canto del loco",
+      "id": "896a34d2",
+      "nombreDisco": "Nunca el tiempo es perdido",
       "url_caratula": "",
       "tipoGrupo": "Solista",
-      "grupo": "Fito y fitipaldi",
+      "grupo": "Manolo Garcia",
       "genero": "Pop",
-      "lanzamiento": "2011",
-      "localizacion": "ES-001AB",
-      "prestado": true,
-      "listado_canciones": [],
-      "id": "3340619f-8146-4581-bb52-767a62d10f7b"
+      "lanzamiento": "2002",
+      "localizacion": "ES-100AA",
+      "listado_canciones": [
+        "http://localhost:3000/canciones/D11d9f8c",
+        "http://localhost:3000/canciones/E11d9f8c"
+      ]
     }
   ]
 }

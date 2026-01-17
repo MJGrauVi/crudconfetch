@@ -4,7 +4,7 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <div className="contenedor-footer">
-      <p>2025 - Mi Colección de Discos </p>
+      <p>2026 - Mi Colección de Discos </p>
     </div>
   );
 };

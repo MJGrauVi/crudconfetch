@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ListadoDiscos.css";
 import Disco from "./Disco.jsx";
-import MensajeTemporal from "./MensajeTemporal.jsx";
 import Cargando from "./Cargando.jsx";
 import FiltroDiscos from "./FiltroDiscos.jsx";
 import useDiscos from "../hooks/useDiscos.js";
