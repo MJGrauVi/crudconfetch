@@ -10,10 +10,10 @@ const Menu = () => {
           Inicio
         </Link>
         <Link className="menu-elemento" to="/insertar">
-          Insertar disco
+          Insertar
         </Link>
         <Link className="menu-elemento" to="/listadoDiscos">
-          Listado discos
+          Listado
         </Link>
       </nav>
     </>
